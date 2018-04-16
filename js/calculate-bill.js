@@ -15,9 +15,11 @@ var billStringElement = document.querySelector(".billString");
 function calculateBtnClicked(){
     var sum = 0;
     var inputString = billStringElement.value;
+    //  * this function should read the string value entered - split it on a comma.
      var list = inputString.split(',');
-
+//  * loop over all the entries in the the resulting list
      list.forEach(function(item){
+       //  * check if it is a call or an sms and add the right amount to the overall total
        if(item.trim() === "call"){
          sum += 2.75;
        }
@@ -27,14 +29,9 @@ function calculateBtnClicked(){
      })
     //  console.log(sum);
     var totalBill = sum.toFixed(2);
+    //  * once done looping over all the entries - display the total onto the screen in the billTotal element
     billTotal.innerHTML = totalBill;
 
 }
-
-calcBillBtn.addEventListener('click', calculateBtnClicked);
-//  * this function should read the string value entered - split it on a comma.
-//  * loop over all the entries in the the resulting list
-//  * check if it is a call or an sms and add the right amount to the overall total
-//  * once done looping over all the entries - display the total onto the screen in the billTotal element
-
 //link the function to a click event on the calculate button
+calcBillBtn.addEventListener('click', calculateBtnClicked);
