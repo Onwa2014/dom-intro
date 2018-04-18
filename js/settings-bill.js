@@ -1,22 +1,57 @@
-// get a reference to the sms or call radio buttons
+var checkedRadioBtnElem = document.querySelector("input[name='billItemTypeWithSettings']:checked");
+var addBtn = document.querySelector(".add");
+var callTotal = document.querySelector(".callTotalSettings");
+var smsTotal = document.querySelector(".smsTotalSettings");
+var totalSum = document.querySelector(".totalSettings");
 
-// get refences to all the settings fields
 
-//get a reference to the add button
+//get the setted values.
+var callCostElem = document.querySelector(".callCostSetting");
+var smsCostElem = document.querySelector(".smsCostSetting");
+var warningValueElem = document.querySelector(".warningLevelSetting");
+var criticalValueElem = document.querySelector(".criticalLevelSetting");
+var updateBtnElem = document.querySelector(".updateSettings");
 
-//get a reference to the 'Update settings' button
+var initCallCost = 0;
+var initSmsCost = 0;
+var initWarning = 0;
+var initCritical = 0;
+var initTotal = 0;
 
-// create a variables that will keep track of all the settings
+function settingsUpdate(){
+  callCost = callCostElem.value;
+  //console.log(callCost);
+  smsCost = smsCostElem.value;
+  warningLevel = warningValueElem.value;
+  criticalLevel = criticalValueElem.value
+}
 
-// create a variables that will keep track of all three totals.
+updateBtnElem.addEventListener('click', settingsUpdate)
 
-//add an event listener for when the 'Update settings' button is pressed
+function calcBillWithSetting(){
 
-//add an event listener for when the add button is pressed
+  console.log(callCost);
 
-//in the event listener get the value from the billItemTypeRadio radio buttons
-// * add the appropriate value to the call / sms total
-// * add the appropriate value to the overall total
-// * add nothing for invalid values that is not 'call' or 'sms'.
-// * display the latest total on the screen.
-// * check the value thresholds and display the total value in the right color.
+  checkedRadioBtn = checkedRadioBtnElem.value;
+
+  if(checkedRadioBtn === "call"){
+    callTotal += callCost;
+  }
+  else if(checkedRadioBtn= "sms"){
+    smsTotal += smsCost;
+  }
+callTotalElem.innerHTML = callTotal.toFixed(2);
+smsTotalElem.innerHTML = smsTotal.toFixed(2);
+var totalSum = callTotal + smsTotal;
+totalSumElem.innerHTML = totalSum.toFixed(2);
+
+if (totalSum >= criticalValue){
+      // adding the danger class will make the text red
+      totalSumElem.classList.add("danger");
+  }
+  else if (totalSum >= warningValue){
+      totalSumElem.classList.add("warning");
+  }
+
+}
+addBtn.addEventListener('click', calcBillWithSetting)
