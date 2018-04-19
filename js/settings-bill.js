@@ -1,8 +1,7 @@
-var checkedRadioBtnElem = document.querySelector("input[name='billItemTypeWithSettings']:checked");
 var addBtn = document.querySelector(".add");
 var callTotal = document.querySelector(".callTotalSettings");
 var smsTotal = document.querySelector(".smsTotalSettings");
-var totalSum = document.querySelector(".totalSettings");
+var totalSumElem = document.querySelector(".totalSettings");
 
 
 //get the setted values.
@@ -12,46 +11,70 @@ var warningValueElem = document.querySelector(".warningLevelSetting");
 var criticalValueElem = document.querySelector(".criticalLevelSetting");
 var updateBtnElem = document.querySelector(".updateSettings");
 
-var initCallCost = 0;
-var initSmsCost = 0;
-var initWarning = 0;
-var initCritical = 0;
-var initTotal = 0;
+var callCost = 0;
+var smsCost = 0;
+var warning = 0;
+var critical = 0;
+var total = 0;
+
+var totalCalls = 0;
+var totalSms= 0
 
 function settingsUpdate(){
-  callCost = callCostElem.value;
-  //console.log(callCost);
-  smsCost = smsCostElem.value;
-  warningLevel = warningValueElem.value;
-  criticalLevel = criticalValueElem.value
+  callCost = parseFloat(callCostElem.value);
+  smsCost = parseFloat(smsCostElem.value);
+  warning = parseFloat(warningValueElem.value);
+  critical = parseFloat(criticalValueElem.value);
+
+  totalSumElem.classList.remove("warning");
+  totalSumElem.classList.remove("danger");
+
+  if(total >= critical){
+    totalSumElem.classList.remove("warning");
+    totalSumElem.classList.add("danger");
+  }
+  else if (total >= warning) {
+    totalSumElem.classList.add("warning");
+    totalSumElem.classList.remove("danger");
+  }
+
+
+
+
 }
 
 updateBtnElem.addEventListener('click', settingsUpdate)
 
 function calcBillWithSetting(){
 
-  console.log(callCost);
-
+  var checkedRadioBtnElem = document.querySelector("input[name='billItemTypeWithSettings']:checked");
   checkedRadioBtn = checkedRadioBtnElem.value;
-
-  if(checkedRadioBtn === "call"){
-    callTotal += callCost;
+  console.log(critical);
+  if(checkedRadioBtn === "call" && critical > total){
+    totalCalls += callCost;
+    total += callCost
   }
-  else if(checkedRadioBtn= "sms"){
-    smsTotal += smsCost;
+  else if(checkedRadioBtn= "sms" && critical > total){
+    totalSms += smsCost;
+      total += smsCost
   }
-callTotalElem.innerHTML = callTotal.toFixed(2);
-smsTotalElem.innerHTML = smsTotal.toFixed(2);
-var totalSum = callTotal + smsTotal;
+callTotal.innerHTML = totalCalls.toFixed(2);
+console.log(totalCalls.toFixed(2));
+smsTotal.innerHTML = totalSms.toFixed(2);
+var totalSum = totalCalls + totalSms;
 totalSumElem.innerHTML = totalSum.toFixed(2);
 
-if (totalSum >= criticalValue){
+if (totalSum >= critical){
       // adding the danger class will make the text red
       totalSumElem.classList.add("danger");
   }
-  else if (totalSum >= warningValue){
+  else if (totalSum >= warning){
       totalSumElem.classList.add("warning");
   }
+
+
+
+
 
 }
 addBtn.addEventListener('click', calcBillWithSetting)

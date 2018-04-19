@@ -17,6 +17,7 @@ function calculateBtnClicked(){
   billTotal.classList.remove("warning");
     var sum = 0;
     var inputString = billStringElement.value;
+
     //  * this function should read the string value entered - split it on a comma.
      var list = inputString.split(',');
 //  * loop over all the entries in the the resulting list
@@ -34,7 +35,7 @@ function calculateBtnClicked(){
     //  * once done looping over all the entries - display the total onto the screen in the billTotal element
     billTotal.innerHTML = totalBill;
     if (totalBill >= 30){
-      console.log("onwa");
+      //console.log("onwa");
         // adding the danger class will make the text red
         billTotal.classList.add("danger");
     }
